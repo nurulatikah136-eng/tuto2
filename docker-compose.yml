@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  quiz-app:
+    build: .
+    container_name: black-gold-quiz
+    ports:
+      - "8080:80"
+    restart: unless-stopped
