@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Black & Gold Math Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a href="#main" class="sr-only">Skip to main content</a>
+
+  <header role="banner">
+    <div class="container brand" aria-label="App header">
+      <div>
+        <div class="brand-title">Black &amp; Gold Math Quiz</div>
+        <div class="brand-sub">⏱️ <span aria-live="polite" aria-atomic="true">00:00</span> — Speed × Accuracy. Be in the Top 3 and claim hadiah from Miss Anis 🎁</div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" role="main" class="container" aria-live="off">
+    <!-- Home / Intro -->
+    <section id="page-home" aria-labelledby="home-title">
+      <h2 id="home-title" class="section-title">First things first ✍️ — Your Details</h2>
+      <p class="muted">Fill this in before starting. Your speed and score decide the podium. Classes are grouped as H3D, F1D, and H2D.</p>
+
+      <form id="studentForm" class="card pad" aria-describedby="home-help" onsubmit="return false;">
+        <div class="grid grid-3">
+          <div>
+            <label for="fullName">Full Name</label>
+            <input id="fullName" name="fullName" class="input" autocomplete="name" required />
+          </div>
+          <div>
+            <label for="matric">Matric Number</label>
+            <input id="matric" name="matric" class="input" inputmode="numeric" autocomplete="off" required />
+          </div>
+          <div>
+            <label for="classSelect">Class</label>
+            <select id="classSelect" name="classSelect" class="input" required aria-label="Select your class">
+              <option value="" selected disabled>Select class…</option>
+              <option value="H3D">H3D</option>
+              <option value="F1D">F1D</option>
+              <option value="H2D">H2D</option>
+            </select>
+          </div>
+        </div>
+        <p id="home-help" class="tiny" style="margin-top:8px;">Your info is used for the leaderboard and certificate.</p>
+      </form>
+
+      <section aria-labelledby="rules-title" class="card pad" style="margin-top:16px;">
+        <h3 id="rules-title" class="section-title">Rules</h3>
+        <ul>
+          <li>No refreshes, one attempt per person.</li>
+          <li>Fastest highest wins.</li>
+          <li>Be nice. Drink water 💧.</li>
+        </ul>
+      </section>
+
+      <nav aria-label="Primary actions" class="toolbar" style="margin-top:16px;">
+        <button id="startQuiz" class="btn gold">Start Quiz ▶</button>
+        <button id="teacherGate" class="btn">Teacher Dashboard 🔐</button>
+        <button id="openBoard" class="btn">Open Leaderboard 🏁</button>
+      </nav>
+    </section>
+
+    <!-- Quiz -->
+    <section id="page-quiz" class="hidden" aria-labelledby="quiz-title">
+      <h2 id="quiz-title" class="section-title">Quiz Time — good luck! 🍀</h2>
+
+      <!-- Announce dynamic changes politely to AT -->
+      <div id="questions" aria-live="polite" aria-relevant="additions text" class="stack"></div>
+
+      <div class="footer-bar" role="toolbar" aria-label="Question navigation">
+        <button id="prevQ" class="btn" aria-label="Go to previous question">◀ Previous</button>
+
+        <div class="pill center-flex" role="status" aria-live="polite" aria-atomic="true">
+          Question <b id="qIndex">1</b>/<b id="qTotal">10</b>
+        </div>
+
+        <button id="nextQ" class="btn" aria-label="Go to next question">Next ▶</button>
+        <button id="submitBtn" class="btn gold">Submit Answers ✅</button>
+      </div>
+    </section>
+
+    <!-- Student Dashboard -->
+    <section id="page-student" class="hidden" aria-labelledby="student-title">
+      <h2 id="student-title" class="section-title">🎓 My Dashboard</h2>
+
+      <div id="mySummary" class="card pad" aria-live="polite"></div>
+
+      <div class="grid grid-3" style="margin: 16px 0;">
+        <button id="retakeBtn" class="btn">Retake (new attempt)</button>
+        <button id="gotoLeaderboard" class="btn">View Leaderboard 🏁</button>
+        <button id="genCert" class="btn gold">Generate Certificate 🎓</button>
+      </div>
+
+      <h3 class="section-title">📝 Review &amp; Solutions</h3>
+      <div id="review" class="grid" aria-live="polite"></div>
+    </section>
+
+    <!-- Leaderboard -->
+    <section id="page-board" class="hidden" aria-labelledby="board-title">
+      <h2 id="board-title" class="section-title">🏆 Live Leaderboard</h2>
+      <p class="muted">
+        How podium works 🏆 Ranking by <strong>Score</strong> (desc), then <strong>Time</strong> (asc).
+        Top 3 winners must see Miss Anis to collect hadiah.
+      </p>
+
+      <div id="podium" class="grid grid-3" role="region" aria-label="Top 3 podium" aria-live="polite"></div>
+      <div id="leaders" class="leaderboard grid" style="margin-top:16px;" role="region" aria-label="Leaderboard list" aria-live="polite"></div>
+
+      <nav class="grid grid-2" style="margin-top:16px;" aria-label="Leaderboard actions">
+        <button id="myDashFromBoard" class="btn">🎓 My Dashboard</button>
+        <button id="backHome" class="btn ghost">⬅ Back to Home</button>
+      </nav>
+    </section>
+
+    <!-- Certificate -->
+    <section id="page-cert" class="hidden" aria-labelledby="cert-title">
+      <h2 id="cert-title" class="section-title">🎓 Certificate of Achievement</h2>
+
+      <div id="certificate-container" class="card pad" style="background: var(--bg); text-align:center;" role="region" aria-live="polite">
+        <h2 style="color:var(--gold); margin: 4px 0 8px;">Certificate of Achievement</h2>
+        <p>This is proudly presented to</p>
+        <h3 id="cert-name" style="color:var(--gold-2); font-size: 28px;">—</h3>
+        <p>for achieving a score of</p>
+        <h3 id="cert-score" style="color:var(--gold-2); font-size: 28px;">—</h3>
+        <p>in the Mathematics Quiz</p>
+        <p>Date: <time id="cert-date" datetime="">—</time></p>
+        <br />
+        <p class="muted"><i>“Keep learning, keep growing!”</i></p>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:16px;">
+        <button id="downloadCert" class="btn gold">📥 Download Certificate</button>
+        <button id="backToDash" class="btn ghost">⬅ Back to Dashboard</button>
+      </div>
+    </section>
+
+    <!-- Teacher Gate -->
+    <section id="page-teacher-gate" class="hidden" aria-labelledby="tgate-title">
+      <h2 id="tgate-title" class="section-title">🔐 Teacher Access</h2>
+
+      <form class="card pad" style="max-width:420px; margin: 20px auto;" aria-describedby="tpass-desc">
+        <label for="tpass">Enter Password</label>
+        <input type="password" id="tpass" class="input" autocomplete="current-password" />
+        <div id="tpassMsg" class="tiny" style="margin-top:4px;"></div>
+        <p id="tpass-desc" class="sr-only">Password required to access the teacher dashboard.</p>
+        <button id="openTeacher" type="button" class="btn" style="margin-top:10px;">Open Dashboard</button>
+      </form>
+    </section>
+
+    <!-- Teacher Dashboard -->
+    <section id="page-teacher" class="hidden" aria-labelledby="teacher-title">
+      <h2 id="teacher-title" class="section-title">👩‍🏫 Teacher Dashboard</h2>
+      <p class="muted">Use the dropdown to view class performance. You can export CSV or clear all results.</p>
+
+      <section class="card pad" aria-label="Teacher controls and stats">
+        <div class="grid grid-3" role="group" aria-label="Filters and actions">
+          <div>
+            <label for="classFilter">Class</label>
+            <select id="classFilter" class="input">
+              <option value="all">All classes</option>
+              <option value="H3D">H3D</option>
+              <option value="F1D">F1D</option>
+              <option value="H2D">H2D</option>
+            </select>
+          </div>
+          <button id="exportCsv" class="btn" type="button">Export CSV</button>
+          <button id="clearAll" class="btn bad" type="button" aria-describedby="clear-warning">Clear All Results</button>
+        </div>
+
+        <p id="clear-warning" class="tiny" style="margin-top:6px;">This permanently removes stored results.</p>
+
+        <div id="teacherStats" style="margin-top:16px;" aria-live="polite" role="region" aria-label="Class statistics"></div>
+        <div id="teacherTable" role="table" aria-label="Student results table"></div>
+      </section>
+
+      <button id="closeTeacher" class="btn ghost" style="margin-top:16px;">Close</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
